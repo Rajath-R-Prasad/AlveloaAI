@@ -1,0 +1,13 @@
+# Trained model weights are stored here.
+# They are NOT committed to git due to file size.
+#
+# Download pre-trained weights:
+#   python scripts/download_weights.py
+#
+# Or train from scratch:
+#   python backend/notebooks/train_pneumonia_yolov8.py
+#
+# Expected files:
+#   yolov8_pneumonia.pt        - YOLOv8 weights (Ultralytics format)
+#   yolov8_pneumonia.pkl       - Serialised sklearn pipeline (preprocessing)
+#   label_encoder.pkl          - Severity label encoder

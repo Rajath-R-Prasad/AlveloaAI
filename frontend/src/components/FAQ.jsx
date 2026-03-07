@@ -7,7 +7,7 @@ const FAQS = [
   },
   {
     q: "Can the AI replace my doctor's diagnosis?",
-    a: "No. PneumoScan is a clinical decision-support tool — a second reader. It helps radiologists and clinicians catch subtle opacities faster and more consistently. All results require review by a qualified healthcare professional before any treatment decision is made.",
+    a: "No. AlveolaAI is a clinical decision-support tool — a second reader. It helps radiologists and clinicians catch subtle opacities faster and more consistently. All results require review by a qualified healthcare professional before any treatment decision is made.",
   },
   {
     q: "What type of X-ray does the system need?",

@@ -90,14 +90,14 @@ export default function XrayCanvas({ detections, showBbox, showHeat, annotatedB6
 
       // Crosshairs
       ctx.strokeStyle = "rgba(232,97,74,.25)"; ctx.lineWidth = 1;
-      [[8, 8, 1, 1],[W - 8, 8, -1, 1],[8, H - 8, 1, -1],[W - 8, H - 8, -1, -1]].forEach(([cx, cy, dx, dy]) => {
+      [[8, 8, 1, 1], [W - 8, 8, -1, 1], [8, H - 8, 1, -1], [W - 8, H - 8, -1, -1]].forEach(([cx, cy, dx, dy]) => {
         const l = 14;
         ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + dx * l, cy); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, cy + dy * l); ctx.stroke();
       });
       ctx.fillStyle = "rgba(232,97,74,.3)";
       ctx.font = "9px 'Nunito Sans',sans-serif";
-      ctx.fillText("PNEUMOSCAN·AI  CHEST AP", 10, H - 10);
+      ctx.fillText("ALVEOLAAI  CHEST AP", 10, H - 10);
     };
 
     draw();

@@ -117,7 +117,7 @@ export default function Home() {
               Pneumonia kills{" "}
               <strong className="text-cream">2.5 million children</strong> every year.
               Many deaths are preventable with faster, more accurate diagnosis.
-              PneumoScan detects the subtle lung opacities that tired eyes miss.
+              AlveolaAI detects the subtle lung opacities that tired eyes miss.
             </p>
 
             <div className="flex gap-4 flex-wrap justify-center animate-floatUp [animation-delay:.3s]">
@@ -183,7 +183,7 @@ export default function Home() {
               },
               {
                 icon: "🌍", color: "text-sage", title: "Reaching Underserved Areas",
-                body: "Rural clinics with limited specialist access can deploy PneumoScan on modest hardware. A web-based second reader is available 24/7, without requiring a full-time radiologist on-site."
+                body: "Rural clinics with limited specialist access can deploy AlveolaAI on modest hardware. A web-based second reader is available 24/7, without requiring a full-time radiologist on-site."
               },
             ].map((f) => (
               <div key={f.title} className="card card-lift p-7">
@@ -275,7 +275,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-serif text-[clamp(28px,4vw,52px)] font-bold text-cream mb-3">
-              What Makes PneumoScan Different
+              What Makes AlveolaAI Different
             </h2>
             <p className="text-base text-muted max-w-md mx-auto">
               Previous CNN classifiers only said 'yes or no'. We show <em>where</em>, <em>how severe</em>, and <em>what to do</em>.
@@ -335,7 +335,7 @@ export default function Home() {
 
       {/* ── FOOTER ────────────────────────────────────────────────────── */}
       <footer className="px-16 py-8 border-t border-border flex justify-between items-center flex-wrap gap-4">
-        <div className="font-serif text-base font-bold text-coral">🫁 PneumoScan</div>
+        <div className="font-serif text-base font-bold text-coral">🫁 AlveolaAI</div>
         <div className="text-xs text-muted text-center">
           Not a replacement for clinical judgement. Always consult a qualified physician.
         </div>

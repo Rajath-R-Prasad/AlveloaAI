@@ -29,16 +29,16 @@ export default function Navbar() {
       <Link to="/" className="flex items-center gap-2.5 no-underline">
         <div className="w-8 h-8 rounded-full bg-coral flex items-center justify-center
                         text-base animate-halo">🫁</div>
-        <span className="font-serif text-lg font-bold text-cream">PneumoScan</span>
+        <span className="font-serif text-lg font-bold text-cream">AlveolaAI</span>
       </Link>
 
       {/* Links */}
       <div className="flex items-center gap-8">
         {[
           ["Why It Matters", "why"],
-          ["Symptoms",       "symptoms"],
-          ["How It Works",   "how"],
-          ["FAQ",            "faq"],
+          ["Symptoms", "symptoms"],
+          ["How It Works", "how"],
+          ["FAQ", "faq"],
         ].map(([label, id]) => (
           <button key={id} onClick={() => scrollTo(id)}
             className="text-sm text-muted transition-colors hover:text-coral bg-transparent border-none cursor-pointer">
@@ -52,10 +52,9 @@ export default function Navbar() {
 
       {/* Model status */}
       <div className="flex items-center gap-2 text-xs text-muted">
-        <span className={`w-2 h-2 rounded-full ${
-          modelOnline === null ? "bg-amber-400 animate-pulse" :
-          modelOnline ? "bg-sage animate-halo" : "bg-coral"
-        }`} />
+        <span className={`w-2 h-2 rounded-full ${modelOnline === null ? "bg-amber-400 animate-pulse" :
+            modelOnline ? "bg-sage animate-halo" : "bg-coral"
+          }`} />
         {modelOnline === null ? "CONNECTING…" : modelOnline ? "MODEL ONLINE" : "MODEL OFFLINE"}
       </div>
     </nav>

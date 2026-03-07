@@ -6,25 +6,25 @@ import FeedbackModal from "../components/FeedbackModal";
 import { reportUrl } from "../utils/api";
 
 const SEV = {
-  Normal:  { color: "text-sage",   border: "border-sage/40",   bg: "bg-sage/10",   icon: "✓",  label: "No pneumonia detected. Lung fields appear clear." },
-  Mild:    { color: "text-amber",  border: "border-amber/40",  bg: "bg-amber/10",  icon: "⚠",  label: "Mild opacity. Monitor closely. Follow-up within 48 h." },
-  Moderate:{ color: "text-orange-400", border: "border-orange-400/40", bg: "bg-orange-400/10", icon: "⚡", label: "Moderate consolidation. Clinical review required." },
-  Severe:  { color: "text-coral",  border: "border-coral/40",  bg: "bg-coral/10",  icon: "🚨", label: "Severe opacity. Immediate intervention required." },
+  Normal: { color: "text-sage", border: "border-sage/40", bg: "bg-sage/10", icon: "✓", label: "No pneumonia detected. Lung fields appear clear." },
+  Mild: { color: "text-amber", border: "border-amber/40", bg: "bg-amber/10", icon: "⚠", label: "Mild opacity. Monitor closely. Follow-up within 48 h." },
+  Moderate: { color: "text-orange-400", border: "border-orange-400/40", bg: "bg-orange-400/10", icon: "⚡", label: "Moderate consolidation. Clinical review required." },
+  Severe: { color: "text-coral", border: "border-coral/40", bg: "bg-coral/10", icon: "🚨", label: "Severe opacity. Immediate intervention required." },
 };
 
 export default function Results() {
   const nav = useNavigate();
-  const [result,   setResult]   = useState(null);
-  const [patient,  setPatient]  = useState({});
-  const [mode,     setMode]     = useState("quick");
-  const [showBbox, setBbox]     = useState(true);
-  const [showHeat, setHeat]     = useState(false);
-  const [showFb,   setFb]       = useState(false);
+  const [result, setResult] = useState(null);
+  const [patient, setPatient] = useState({});
+  const [mode, setMode] = useState("quick");
+  const [showBbox, setBbox] = useState(true);
+  const [showHeat, setHeat] = useState(false);
+  const [showFb, setFb] = useState(false);
 
   useEffect(() => {
-    const r = sessionStorage.getItem("pneumoscan_result");
-    const p = sessionStorage.getItem("pneumoscan_patient");
-    const m = sessionStorage.getItem("pneumoscan_mode");
+    const r = sessionStorage.getItem("alveolaai_result");
+    const p = sessionStorage.getItem("alveolaai_patient");
+    const m = sessionStorage.getItem("alveolaai_mode");
     if (!r) { nav("/analyze"); return; }
     setResult(JSON.parse(r));
     setPatient(p ? JSON.parse(p) : {});
@@ -33,7 +33,6 @@ export default function Results() {
 
   if (!result) return null;
   const sev = SEV[result.severity.label] || SEV.Normal;
-  const showGemini = result.severity.label === "Mild" || result.severity.label === "Moderate";
 
   return (
     <div className="pt-16 min-h-screen">
@@ -58,20 +57,20 @@ export default function Results() {
             </span>
             <button className="btn-ghost text-xs" onClick={() => setFb(true)}>✏ Correct</button>
             <button className="btn-ghost text-xs"
-              onClick={() => { sessionStorage.removeItem("pneumoscan_result"); nav("/analyze"); }}>
+              onClick={() => { sessionStorage.removeItem("alveolaai_result"); nav("/analyze"); }}>
               + New Scan
             </button>
           </div>
         </div>
 
         {/* Alert banner */}
-        <div className={`flex items-center gap-4 p-4 rounded-xl border mb-6 ${sev.bg} ${sev.border}`}>
+        {/* <div className={`flex items-center gap-4 p-4 rounded-xl border mb-6 ${sev.bg} ${sev.border}`}>
           <span className="text-2xl">{sev.icon}</span>
           <div>
-            <p className={`font-bold text-sm mb-0.5 ${sev.color}`}>{result.severity.label} Pneumonia</p>
+            <p className={`font-bold text-sm mb-0.5 ${sev.color}`}>{result.severity.label}</p>
             <p className="text-xs text-muted">{sev.label}</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Main grid */}
         <div className="grid grid-cols-2 gap-6 mb-6">
@@ -172,12 +171,12 @@ export default function Results() {
             </div>
             <div className="grid grid-cols-3 gap-4">
               {[
-                ["mAP Score",       result.advanced.map_score?.toFixed(3)],
-                ["IoU Region 1",    result.advanced.iou_scores?.[0]?.toFixed(3)],
-                ["Model",           result.advanced.model_info?.name],
-                ["Version",         result.advanced.model_info?.version],
-                ["Threshold",       result.advanced.model_info?.threshold],
-                ["Regions",         result.advanced.region_stats?.length],
+                ["mAP Score", result.advanced.map_score?.toFixed(3)],
+                ["IoU Region 1", result.advanced.iou_scores?.[0]?.toFixed(3)],
+                ["Model", result.advanced.model_info?.name],
+                ["Version", result.advanced.model_info?.version],
+                ["Threshold", result.advanced.model_info?.threshold],
+                ["Regions", result.advanced.region_stats?.length],
               ].map(([k, v]) => (
                 <div key={k} className="bg-surf border border-border rounded-xl p-4">
                   <p className="text-[10px] text-muted font-bold uppercase tracking-widest mb-1">{k}</p>
@@ -189,15 +188,13 @@ export default function Results() {
         )}
 
         {/* Gemini treatment */}
-        {showGemini && (
-          <div className="mb-6">
-            <GeminiCard
-              severity={result.severity.label}
-              patientAge={patient.age}
-              patientNotes={patient.notes}
-            />
-          </div>
-        )}
+        <div className="mb-6">
+          <GeminiCard
+            severity={result.severity.label}
+            patientAge={patient.age}
+            patientNotes={patient.notes}
+          />
+        </div>
 
         {/* PDF report */}
         <div className="p-6 rounded-2xl flex items-center justify-between flex-wrap gap-4"

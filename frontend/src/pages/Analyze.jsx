@@ -8,15 +8,15 @@ export default function Analyze() {
   const nav = useNavigate();
   const fileRef = useRef(null);
 
-  const [dragging, setDragging]     = useState(false);
-  const [file, setFile]             = useState(null);
-  const [preview, setPreview]       = useState(null);
-  const [showConfirm, setConfirm]   = useState(false);
-  const [loading, setLoading]       = useState(false);
-  const [loadStep, setLoadStep]     = useState(0);
-  const [error, setError]           = useState(null);
-  const [mode, setMode]             = useState("quick");
-  const [patient, setPatient]       = useState({ name: "", age: "", sex: "", notes: "" });
+  const [dragging, setDragging] = useState(false);
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [showConfirm, setConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadStep, setLoadStep] = useState(0);
+  const [error, setError] = useState(null);
+  const [mode, setMode] = useState("quick");
+  const [patient, setPatient] = useState({ name: "", age: "", sex: "", notes: "" });
 
   const STEPS = 7;
 
@@ -38,18 +38,18 @@ export default function Analyze() {
       const result = await analyzeXray({
         file,
         patientName: patient.name,
-        patientAge:  patient.age ? parseInt(patient.age) : undefined,
-        patientSex:  patient.sex || undefined,
-        notes:       patient.notes || undefined,
+        patientAge: patient.age ? parseInt(patient.age) : undefined,
+        patientSex: patient.sex || undefined,
+        notes: patient.notes || undefined,
         mode,
       });
       clearInterval(stepInterval);
       setLoadStep(STEPS);
       await new Promise((r) => setTimeout(r, 500));
       // Store result in sessionStorage for Results page
-      sessionStorage.setItem("pneumoscan_result",  JSON.stringify(result));
-      sessionStorage.setItem("pneumoscan_patient", JSON.stringify(patient));
-      sessionStorage.setItem("pneumoscan_mode",    mode);
+      sessionStorage.setItem("alveolaai_result", JSON.stringify(result));
+      sessionStorage.setItem("alveolaai_patient", JSON.stringify(patient));
+      sessionStorage.setItem("alveolaai_mode", mode);
       nav("/results");
     } catch (e) {
       clearInterval(stepInterval);
@@ -98,7 +98,7 @@ export default function Analyze() {
             className={`border-2 rounded-2xl p-12 text-center cursor-pointer transition-all duration-300
               flex flex-col items-center justify-center min-h-[380px]
               ${dragging ? "border-coral bg-coral/4 shadow-[inset_0_0_40px_rgba(232,97,74,.06)]"
-                         : "border-dashed border-border bg-card hover:border-coral/40"}`}
+                : "border-dashed border-border bg-card hover:border-coral/40"}`}
           >
             <input ref={fileRef} type="file" accept="image/*,.dcm"
               className="hidden" onChange={(e) => handleFile(e.target.files[0])} />

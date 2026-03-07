@@ -2,11 +2,10 @@ import { useState } from "react";
 import { getGeminiGuidance } from "../utils/api";
 
 export default function GeminiCard({ severity, patientAge, patientNotes }) {
-  const [apiKey, setApiKey]   = useState(import.meta.env.VITE_GEMINI_API_KEY || "");
-  const [showKey, setShowKey] = useState(false);
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
   const [loading, setLoading] = useState(false);
-  const [result, setResult]   = useState(null);
-  const [error, setError]     = useState(null);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleGenerate = async () => {
     if (!apiKey.trim()) { setError("Please enter your Gemini API key."); return; }
@@ -44,8 +43,8 @@ export default function GeminiCard({ severity, patientAge, patientNotes }) {
       <div className="px-6 py-4 border-b border-sage/20 flex items-center gap-3">
         <span className="text-2xl">💊</span>
         <div>
-          <p className="font-serif text-lg font-bold text-sage">AI Treatment Guidance</p>
-          <p className="text-xs text-muted">Powered by Google Gemini · {severity} Pneumonia</p>
+          <p className="font-serif text-lg font-bold text-sage">Treatment Guidance</p>
+          <p className="text-xs text-muted">{severity}</p>
         </div>
       </div>
 
@@ -58,41 +57,20 @@ export default function GeminiCard({ severity, patientAge, patientNotes }) {
             </p>
 
             <div className="flex gap-3 mb-3">
-              <div className="relative flex-1">
-                <input
-                  type={showKey ? "text" : "password"}
-                  placeholder="AIza…  (Gemini API Key)"
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  className="input-field pr-10"
-                />
-                <button
-                  onClick={() => setShowKey(!showKey)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted bg-transparent border-none cursor-pointer text-sm"
-                >
-                  {showKey ? "🙈" : "👁"}
-                </button>
-              </div>
               <button
                 onClick={handleGenerate}
-                disabled={!apiKey.trim()}
+                disabled={!apiKey.trim() || loading}
                 className="btn-coral px-6 py-3 text-sm rounded-xl"
               >
                 Get Guidance
               </button>
             </div>
 
-            <p className="text-xs text-muted">
-              🔒 Key used only for this request, never stored.{" "}
-              <a
-                href="https://aistudio.google.com/app/apikey"
-                target="_blank"
-                rel="noreferrer"
-                className="text-sage underline"
-              >
-                Get a free key →
-              </a>
-            </p>
+            {!apiKey && (
+              <p className="text-xs text-coral mt-2">
+                ⚠️ Missing VITE_GEMINI_API_KEY in .env file. Please restart the front-end server.
+              </p>
+            )}
 
             {error && (
               <div className="mt-3 p-3 rounded-lg bg-coral/10 border border-coral/30 text-coral text-sm">
@@ -105,7 +83,7 @@ export default function GeminiCard({ severity, patientAge, patientNotes }) {
         {loading && (
           <div className="text-center py-8">
             <div className="w-10 h-10 rounded-full border-2 border-border border-t-sage animate-spinSlow mx-auto mb-4" />
-            <p className="text-muted text-sm">Gemini is generating recommendations…</p>
+            <p className="text-muted text-sm">Get recommendation on quick care</p>
           </div>
         )}
 
